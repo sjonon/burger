@@ -1,0 +1,38 @@
+<div class="hero-image">
+    <div class="hero-text">
+        <h1>Eat a burger</h1>
+        <h3>You know you want one</h3>
+        <h3>Which one do you want first?</h3>
+    </div>
+</div>
+<div>
+    <h3>These are burgers I want to try</h3>
+    <ul>
+        {{#each burgers}}
+        {{#unless devoured}}
+        <li>{{this.burger_name}}</li>
+        {{/unless}}
+        {{/each}}
+    </ul>
+</div>
+
+<div>
+    <h3>These are the awesome burgers I have tried</h3>
+     <ul>
+        {{#each burgers}}
+        {{#if devoured}}
+        <li>{{this.burger_name}}</li>
+        {{/if}}
+        {{/each}}
+    </ul>
+</div>
+
+<h3>Add Your Own Burger</h3>
+<form class="create-form">
+    <div class="form-group">
+    <label for="burgerName">Burger Name:</label>
+    <input type="text" name="burgerName" placeholder="Enter a burger name"><br>
+    </div>
+    <button type="submit">Add My Burger</button>
+</form>
+{{!-- Photo by amirali mirhashemian on Unsplash --}}
