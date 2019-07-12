@@ -19,7 +19,7 @@ var orm = {
         });
     },
     updateOne: function (table, cols, vals, condition, cb) {
-        var querystring = `UPDATE ${table} SET (${cols}) = (${vals}) WHERE (${condition})`;
+        var querystring = `UPDATE ${table} SET ${cols} = ${vals} WHERE ${condition}`;
         connection.query(querystring, function (err, result) {
             if (err) throw err;
             cb(result)
