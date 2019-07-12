@@ -5,34 +5,64 @@
         <h3>Which one do you want first?</h3>
     </div>
 </div>
-<div>
-    <h3>These are burgers I want to try</h3>
-    <ul>
-        {{#each burgers}}
-        {{#unless devoured}}
-        <li>{{this.burger_name}}</li>
-        {{/unless}}
-        {{/each}}
-    </ul>
-</div>
+<div class="container">
+    <div class="row">
+        <div class=col-md-6>
+            <h4>These are burgers I want to try</h4>
+            <ul>
+                {{#each burgers}}
+                {{#unless devoured}}
+                <li>{{this.burger_name}}<button type="button" class="btn btn-outline-warning btn-sm">Devoure</button></li>
+                {{/unless}}
+                {{/each}}
+            </ul>
+        </div>
 
-<div>
-    <h3>These are the awesome burgers I have tried</h3>
-     <ul>
-        {{#each burgers}}
-        {{#if devoured}}
-        <li>{{this.burger_name}}</li>
-        {{/if}}
-        {{/each}}
-    </ul>
+        <div class=col-md-6>
+            <h4>These are the awesome burgers I tried</h4>
+            <ul>
+                {{#each burgers}}
+                {{#if devoured}}
+                <li>{{this.burger_name}}</li>
+                {{/if}}
+                {{/each}}
+            </ul>
+        </div>
+    </div>
 </div>
 
 <h3>Add Your Own Burger</h3>
-<form class="create-form">
+<form id="add-burger" class="create-form">
     <div class="form-group">
-    <label for="burgerName">Burger Name:</label>
-    <input type="text" name="burgerName" placeholder="Enter a burger name"><br>
+        <label for="burger">Burger Name:</label>
+        <input type="text" name="burgerName" id="burgerName" placeholder="Enter a burger name"><br>
     </div>
-    <button type="submit">Add My Burger</button>
+    <button type="submit" class="btn btn-warning">Add My Burger</button>
 </form>
 {{!-- Photo by amirali mirhashemian on Unsplash --}}
+
+<script type="text/javascript">
+
+    $("#add-burger").on("submit", function (event) {
+        // Make sure to preventDefault on a submit event.
+        event.preventDefault();
+
+        var newBurger = {
+            burger_name: $("#burgerName").val().trim(),
+        };
+        console.log("burger_name");
+        // Send the POST request.
+        $.ajax("/", {
+            type: "POST",
+            data: newBurger
+        }).then(
+            function () {
+                console.log("created new burger");
+                // Reload the page to get the updated list
+                location.reload()
+            }
+        );
+    });
+
+
+</script>
