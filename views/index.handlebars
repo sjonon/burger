@@ -12,7 +12,7 @@
             <ul>
                 {{#each burgers}}
                 {{#unless devoured}}
-                <li>{{this.burger_name}}<button type="button" class="btn btn-outline-warning btn-sm">Devoure</button></li>
+                <li>{{this.burger_name}}<button type="button" class="devour btn btn-outline-warning btn-sm" id="{{this.id}}">Devour</button></li>
                 {{/unless}}
                 {{/each}}
             </ul>
@@ -42,6 +42,26 @@
 {{!-- Photo by amirali mirhashemian on Unsplash --}}
 
 <script type="text/javascript">
+
+    $("#devour").on("click", function (event) {
+        debugger;
+        console.log("clicked")
+        var devouredBurger = {
+            devoured: true
+        };
+        var id = $(this).data("id");
+
+        $.ajax("/" + id, {
+            type: "PUT",
+            data: devouredBurger,
+        }).then(
+            function () {
+                console.log("changed burger to devoured");
+                // Reload the page to get the updated list
+                location.assign("/");
+            }
+        );
+    });
 
     $("#add-burger").on("submit", function (event) {
         // Make sure to preventDefault on a submit event.
