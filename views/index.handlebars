@@ -2,7 +2,7 @@
     <div class="hero-text">
         <h1>Eat a burger</h1>
         <h3>You know you want one</h3>
-        <h3>Which one do you want first?</h3>
+        <h3>Which one do you want to eat first?</h3>
     </div>
 </div>
 <div class="container">
@@ -12,7 +12,7 @@
             <ul>
                 {{#each burgers}}
                 {{#unless devoured}}
-                <li>{{this.burger_name}}<button type="button" class="devour btn btn-outline-warning btn-sm" id="{{this.id}}">Devour</button></li>
+                <li>{{this.burger_name}}<button type="button" class="devour btn btn-outline-warning btn-sm" data-id="{{this.id}}">Devour</button></li>
                 {{/unless}}
                 {{/each}}
             </ul>
@@ -29,9 +29,11 @@
             </ul>
         </div>
     </div>
-</div>
 
-<h3>Add Your Own Burger</h3>
+<div class="row">
+<div class="col-md-4"></div>
+<div class="col-md-4">
+<h3>Add A Burger</h3>
 <form id="add-burger" class="create-form">
     <div class="form-group">
         <label for="burger">Burger Name:</label>
@@ -39,26 +41,22 @@
     </div>
     <button type="submit" class="btn btn-warning">Add My Burger</button>
 </form>
+</div>
+</div>
 {{!-- Photo by amirali mirhashemian on Unsplash --}}
-
+</div>
 <script type="text/javascript">
 
-    $("#devour").on("click", function (event) {
-        debugger;
-        console.log("clicked")
-        var devouredBurger = {
-            devoured: true
-        };
+    $(".devour").on("click", function (event) {
         var id = $(this).data("id");
 
-        $.ajax("/" + id, {
+        $.ajax("/api/burger/"+id, {
             type: "PUT",
-            data: devouredBurger,
         }).then(
             function () {
                 console.log("changed burger to devoured");
                 // Reload the page to get the updated list
-                location.assign("/");
+                location.reload();
             }
         );
     });
@@ -72,7 +70,7 @@
         };
         console.log("burger_name");
         // Send the POST request.
-        $.ajax("/", {
+        $.ajax("/api/burger", {
             type: "POST",
             data: newBurger
         }).then(
